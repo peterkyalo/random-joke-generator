@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import { useRef, useState } from 'react';
 import './App.css';
+import useRandomJoke from './useRandomJoke';
+
 
 function App() {
+
+  const firstNameRef = useRef(null)
+  const lastNameRef = useRef(null)
+
+  
+  const [firstName ,setFirtName] = useState('Peter')
+  const [lastName ,setLastName] = useState('Kyalo')
+  
+  const joke = useRandomJoke(firstName, lastName);
+
+  const generateJoke = (e) => {
+    e.preventDefault();
+    setFirtName(firstNameRef.current.value);
+    setLastName(lastNameRef.current.value);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>The Joke Generator</h1>
+      <h2>{joke}</h2>
+      <form>
+        <input placeholder='first name' ref={firstNameRef}/>
+        <input placeholder='first name' ref={lastNameRef}/>
+        <button onClick={generateJoke}>Generate Joke</button>
+      </form>
     </div>
   );
 }
